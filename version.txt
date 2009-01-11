@@ -1,13 +1,13 @@
-PureMVC haXe Utility - State Machine 
+PureMVC Haxe Utility - State Machine 
 Copyright (c) 2007-2008, Neil Manuell <neil.manuell@puremvc.org>
 and Cliff Hall <cliff.hall@puremvc.org>
 Ported to Haxe by Zjnue Brzavi <zjnue.brzavi@puremvc.org>
 Your reuse is governed by the Creative Commons Attribution 3.0 License
 --------------------------------------------------------------------------
-Release Date: 11/29/08
-    Platform: ActionScript 3 
+Release Date: 1/11/09
+    Platform: Haxe 
      Version: 1 
-    Revision: 0
+    Revision: 1
      Authors: Neil Manuell <neil.manuell@puremvc.org>
             : Cliff Hall <cliff.hall@puremvc.org>
             : Zjnue Brzavi <zjnue.brzavi@puremvc.org>
