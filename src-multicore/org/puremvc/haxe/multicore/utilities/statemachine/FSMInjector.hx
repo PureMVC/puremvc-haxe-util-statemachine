@@ -81,7 +81,8 @@ class FSMInjector extends Notifier
 		var name = stateDef.get("name");
 		var exiting = stateDef.get("exiting");
 		var entering = stateDef.get("entering");
-		var state = new State( name, entering, exiting );
+		var changed = stateDef.get("changed");
+		var state = new State( name, entering, exiting, changed );
 		
 		// Create transitions
 		for( transDef in stateDef.elementsNamed("transition") )

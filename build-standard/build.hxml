@@ -7,7 +7,7 @@
 # change the following line to the path of pureMVC framework sources
 -cp ../../../pmvc_haxe/src
 -cp ../src-standard
--swf ../bin-standard/puremvc_haxe_utilities_statemachine_fl10.swf
+-swf ../bin-standard/Utility_Haxe_MultiCore_StateMachine_1_2_fl10.swf
 -swf-version 10
 ImportAll
 
@@ -16,7 +16,7 @@ ImportAll
 # change the following line to the path of pureMVC framework sources
 -cp ../../../pmvc_haxe/src
 -cp ../src-standard
--swf ../bin-standard/puremvc_haxe_utilities_statemachine_fl9.swf
+-swf ../bin-standard/Utility_Haxe_MultiCore_StateMachine_1_2_fl9.swf
 -swf-version 9
 ImportAll
 
@@ -25,7 +25,7 @@ ImportAll
 # change the following line to the path of pureMVC framework sources
 -cp ../../../pmvc_haxe/src
 -cp ../src-standard
--swf ../bin-standard/puremvc_haxe_utilities_statemachine_fl8.swf
+-swf ../bin-standard/Utility_Haxe_MultiCore_StateMachine_1_2_fl8.swf
 -swf-version 8
 ImportAll
 
@@ -34,7 +34,7 @@ ImportAll
 # change the following line to the path of pureMVC framework sources
 -cp ../../../pmvc_haxe/src
 -cp ../src-standard
--swf ../bin-standard/puremvc_haxe_utilities_statemachine_fl7.swf
+-swf ../bin-standard/Utility_Haxe_MultiCore_StateMachine_1_2_fl7.swf
 -swf-version 7
 ImportAll
 
@@ -43,7 +43,7 @@ ImportAll
 # change the following line to the path of pureMVC framework sources
 -cp ../../../pmvc_haxe/src
 -cp ../src-standard
--swf ../bin-standard/puremvc_haxe_utilities_statemachine_fl6.swf
+-swf ../bin-standard/Utility_Haxe_MultiCore_StateMachine_1_2_fl6.swf
 -swf-version 6
 ImportAll
 
@@ -52,7 +52,7 @@ ImportAll
 # change the following line to the path of pureMVC framework sources
 -cp ../../../pmvc_haxe/src
 -cp ../src-standard
--js ../bin-standard/puremvc_haxe_utilities_statemachine.js
+-js ../bin-standard/Utility_Haxe_MultiCore_StateMachine_1_2_js.js
 ImportAll
 
 # build docs

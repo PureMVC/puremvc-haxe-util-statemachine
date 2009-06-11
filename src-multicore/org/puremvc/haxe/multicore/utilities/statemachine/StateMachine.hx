@@ -9,7 +9,7 @@ import org.puremvc.haxe.multicore.interfaces.INotification;
 import org.puremvc.haxe.multicore.patterns.mediator.Mediator;
 
 /**
- * A Finite State Machine implimentation.
+ * A Finite State Machine implementation.
  * 
  * <p>Handles regisistration and removal of state definitions, 
  * which include optional entry and exit commands for each 
@@ -73,16 +73,21 @@ class StateMachine extends Mediator
 	
 	/**
 	 * Transitions to the given state from the current state.
-	 *
-	 * <p>Sends the exiting notification for the current state 
-	 * and the entering notification for the new state.</p>
-	 *
-	 * <p>Both the exiting notification for the current state
-	 * and the entering notification for the next state
-	 * will have a reference to the next state in the note
-	 * body.</p>
+	 * <p>
+	 * Sends the [exiting] notification for the current state 
+	 * followed by the [entering] notification for the new state.
+	 * Once finally transitioned to the new state, the [changed] 
+	 * notification for the new state is sent.</p>
+	 * <p>
+	 * If a data parameter is provided, it is included as the body of all
+	 * three state-specific transition notes.</p>
+	 * <p>
+	 * Finally, when all the state-specific transition notes have been
+	 * sent, a [StateMachine.CHANGED] note is sent, with the
+	 * new [State] object as the [body] and the name of the 
+	 * new state in the [type].</p>
 	 */
-	private function transitionTo( nextState : State ) : Void
+	private function transitionTo( nextState : State, ?data : Dynamic = null ) : Void
 	{
 		// Going nowhere?
 		if( nextState == null ) return;
@@ -90,24 +95,33 @@ class StateMachine extends Mediator
 		// Clear the cancel flag
 		canceled = false;
 			
-		// Exit the current State (if set)
-		if( currentState != null ) {
-			if( nextState.name == currentState.name ) return;
-			if( currentState.exiting != null ) sendNotification( currentState.exiting, nextState );
-		}
+		// Exit the current State
+		if( currentState != null && currentState.exiting != null )
+			sendNotification( currentState.exiting, data, nextState.name );
 		
-		// Check to see whether the transition has been canceled
+		// Check to see whether the exiting guard has been canceled
 		if( canceled ) {
 			canceled = false;
 			return;
 		}
 		
 		// Enter the next State 
-		if( nextState.entering != null ) sendNotification( nextState.entering, nextState );
+		if( nextState.entering != null ) sendNotification( nextState.entering, data );
+			
+		// Check to see whether the entering guard has been canceled
+		if( canceled ) {
+			canceled = false;
+			return;
+		}
+		
+		// change the current state only when both guards have been passed
 		currentState = nextState;
 		
-		// Notify the app that the state changed and what the new state is 
-		sendNotification( CHANGED, currentState );
+		// Send the notification configured to be sent when this specific state becomes current 
+		if( nextState.changed != null ) sendNotification( currentState.changed, data );
+
+		// Notify the app generally that the state changed and what the new state is 
+		sendNotification( CHANGED, currentState, currentState.name );
 	}
 	
 	/**
@@ -134,7 +148,7 @@ class StateMachine extends Mediator
 				var action : String = note.getType();
 				var target : String = currentState.getTarget( action );
 				if( states.exists( target ) )
-					transitionTo( states.get( target ) );
+					transitionTo( states.get( target ), note.getBody() );
 			case CANCEL:
 				canceled = true;
 		}

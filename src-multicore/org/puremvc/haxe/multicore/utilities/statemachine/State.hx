@@ -18,15 +18,20 @@ class State
 	
 	// The notification to dispatch when exiting the state
 	public var exiting : String;
+	
+	// The notification to dispatch when the state has actually changed
+	public var changed : String;
 
 	/**
 	 * Constructor.
 	 */
-	public function new( name : String, ?entering : String = null, ?exiting : String = null )
+	public function new( name : String, ?entering : String = null, 
+		?exiting : String = null, ?changed : String = null )
 	{
 		this.name = name;
 		if( entering != null ) this.entering = entering;
 		if( exiting != null ) this.exiting = exiting;
+		if( changed != null ) this.changed = changed;
 		transitions = new Hash<String>();
 	}
 	
@@ -35,7 +40,7 @@ class State
 	 */
 	public function defineTrans( action : String, target : String ) : Void
 	{
-		if( getTarget( action ) != null ) return;	
+		if( getTarget( action ) != null ) return;
 		transitions.set( action, target );
 	}
 

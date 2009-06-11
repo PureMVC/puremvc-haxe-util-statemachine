@@ -9,7 +9,7 @@ import org.puremvc.haxe.interfaces.INotification;
 import org.puremvc.haxe.patterns.mediator.Mediator;
 
 /**
- * A Finite State Machine implimentation.
+ * A Finite State Machine implementation.
  * 
  * <p>Handles regisistration and removal of state definitions, 
  * which include optional entry and exit commands for each 
@@ -82,7 +82,7 @@ class StateMachine extends Mediator
 	 * will have a reference to the next state in the note
 	 * body.</p>
 	 */
-	private function transitionTo( nextState : State ) : Void
+	private function transitionTo( nextState : State, ?data : Dynamic = null ) : Void
 	{
 		// Going nowhere?
 		if( nextState == null ) return;
@@ -90,24 +90,33 @@ class StateMachine extends Mediator
 		// Clear the cancel flag
 		canceled = false;
 			
-		// Exit the current State (if set)
-		if( currentState != null ) {
-			if( nextState.name == currentState.name ) return;
-			if( currentState.exiting != null ) sendNotification( currentState.exiting, nextState );
+		// Exit the current State 
+		if( currentState != null && currentState.exiting != null )
+			sendNotification( currentState.exiting, data, nextState.name );
+			
+		// Check to see whether the exiting guard has been canceled
+		if( canceled ) {
+			canceled = false;
+			return;
 		}
-		
-		// Check to see whether the transition has been canceled
+			
+		// Enter the next State 
+		if( nextState.entering != null ) sendNotification( nextState.entering, data );
+			
+		// Check to see whether the entering guard has been canceled
 		if( canceled ) {
 			canceled = false;
 			return;
 		}
 		
-		// Enter the next State 
-		if( nextState.entering != null ) sendNotification( nextState.entering, nextState );
+		// change the current state only when both guards have been passed
 		currentState = nextState;
-		
-		// Notify the app that the state changed and what the new state is 
-		sendNotification( CHANGED, currentState );
+			
+		// Send the notification configured to be sent when this specific state becomes current 
+		if( nextState.changed != null ) sendNotification( currentState.changed, data );
+
+		// Notify the app generally that the state changed and what the new state is 
+		sendNotification( CHANGED, currentState, currentState.name );
 	}
 	
 	/**
@@ -134,7 +143,7 @@ class StateMachine extends Mediator
 				var action : String = note.getType();
 				var target : String = currentState.getTarget( action );
 				if( states.exists( target ) )
-					transitionTo( states.get( target ) );
+					transitionTo( states.get( target ), note.getBody() );
 			case CANCEL:
 				canceled = true;
 		}

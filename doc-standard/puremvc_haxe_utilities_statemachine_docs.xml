@@ -561,10 +561,10 @@
 		<new line="43"><f a=""><e path="Void"/></f></new>
 	</class>
 	<class path="neko.Boot" params="" file="C:\Program Files\Motion-Twin\haxe/std/neko/Boot.hx">
-		<__tmp_str line="29" static="1"><f a=""><c path="Int"/></f></__tmp_str>
+		<__tmp_str line="29" static="1"><f a=""><c path="String"/></f></__tmp_str>
 		<__enum_str line="33" static="1"><f a="e">
 	<d/>
-	<c path="Int"/>
+	<c path="String"/>
 </f></__enum_str>
 		<__interfLoop line="55" static="1"><f a="cc:cl">
 	<d/>
@@ -1771,12 +1771,12 @@
  ]]></haxe_doc>
 	</class>
 	<class path="StringBuf" params="" file="C:\Program Files\Motion-Twin\haxe/std/StringBuf.hx">
-		<__make line="98" static="1"><d/></__make>
-		<__add line="99" static="1"><d/></__add>
-		<__add_char line="100" static="1"><d/></__add_char>
-		<__add_sub line="101" static="1"><d/></__add_sub>
-		<__string line="102" static="1"><d/></__string>
-		<add public="1" line="46">
+		<__make line="115" static="1"><d/></__make>
+		<__add line="116" static="1"><d/></__add>
+		<__add_char line="117" static="1"><d/></__add_char>
+		<__add_sub line="118" static="1"><d/></__add_sub>
+		<__string line="119" static="1"><d/></__string>
+		<add public="1" line="48">
 			<f a="?x">
 				<d/>
 				<e path="Void"/>
@@ -1785,7 +1785,7 @@
 		Adds the representation of any value to the string buffer.
 	</haxe_doc>
 		</add>
-		<addSub public="1" line="57">
+		<addSub public="1" line="61">
 			<f a="s:pos:?len">
 				<c path="String"/>
 				<c path="Int"/>
@@ -1796,7 +1796,7 @@
 		Adds a part of a string to the string buffer.
 	</haxe_doc>
 		</addSub>
-		<addChar public="1" line="73">
+		<addChar public="1" line="79">
 			<f a="c">
 				<c path="Int"/>
 				<e path="Void"/>
@@ -1805,7 +1805,7 @@
 		Adds a character to the string buffer.
 	</haxe_doc>
 		</addChar>
-		<toString public="1" line="87">
+		<toString public="1" line="95">
 			<f a=""><c path="String"/></f>
 			<haxe_doc>
 		Returns the content of the string buffer.
@@ -2395,8 +2395,18 @@
 	<class path="IntIter" params="" file="C:\Program Files\Motion-Twin\haxe/std/IntIter.hx">
 		<min><c path="Int"/></min>
 		<max><c path="Int"/></max>
-		<hasNext public="1" line="43"><f a=""><e path="Bool"/></f></hasNext>
-		<next public="1" line="47"><f a=""><c path="Int"/></f></next>
+		<hasNext public="1" line="46">
+			<f a=""><e path="Bool"/></f>
+			<haxe_doc>
+		Returns true if the iterator has other items, false otherwise.
+	</haxe_doc>
+		</hasNext>
+		<next public="1" line="53">
+			<f a=""><c path="Int"/></f>
+			<haxe_doc>
+		Moves to the next item of the iterator.
+	</haxe_doc>
+		</next>
 		<new public="1" line="38">
 			<f a="min:max">
 				<c path="Int"/>
@@ -3097,7 +3107,7 @@
 		Recursively compare two enums constructors and parameters.
 	</haxe_doc>
 		</enumEq>
-		<enumConstructor public="1" line="669" static="1">
+		<enumConstructor public="1" line="670" static="1">
 			<f a="e">
 				<d/>
 				<c path="String"/>
@@ -3106,7 +3116,7 @@
 		Returns the constructor of an enum
 	</haxe_doc>
 		</enumConstructor>
-		<enumParameters public="1" line="682" static="1">
+		<enumParameters public="1" line="683" static="1">
 			<f a="e">
 				<d/>
 				<c path="Array"><d/></c>
@@ -3115,7 +3125,7 @@
 		Returns the parameters of an enum
 	</haxe_doc>
 		</enumParameters>
-		<enumIndex public="1" line="700" static="1">
+		<enumIndex public="1" line="701" static="1">
 			<f a="e">
 				<d/>
 				<c path="Int"/>
@@ -3270,8 +3280,9 @@
 	 ]]></haxe_doc>
 		</removeState>
 		<transitionTo line="85">
-			<f a="nextState">
+			<f a="nextState:?data">
 				<c path="org.puremvc.haxe.utilities.statemachine.State"/>
+				<d/>
 				<e path="Void"/>
 			</f>
 			<haxe_doc><![CDATA[
@@ -3287,13 +3298,13 @@
 	 ]]></haxe_doc>
 		</transitionTo>
 		<currentState public="1" get="getCurrentState" set="setCurrentState"><c path="org.puremvc.haxe.utilities.statemachine.State"/></currentState>
-		<getCurrentState line="148">
+		<getCurrentState line="157">
 			<f a=""><c path="org.puremvc.haxe.utilities.statemachine.State"/></f>
 			<haxe_doc>
 	 * Get the current state.
 	 </haxe_doc>
 		</getCurrentState>
-		<setCurrentState line="156">
+		<setCurrentState line="165">
 			<f a="state">
 				<c path="org.puremvc.haxe.utilities.statemachine.State"/>
 				<c path="org.puremvc.haxe.utilities.statemachine.State"/>
@@ -3327,7 +3338,7 @@
 	 </haxe_doc>
 		</new>
 		<haxe_doc><![CDATA[
- * A Finite State Machine implimentation.
+ * A Finite State Machine implementation.
  * 
  * <p>Handles regisistration and removal of state definitions, 
  * which include optional entry and exit commands for each 
@@ -3338,7 +3349,8 @@
 		<name public="1"><c path="String"/></name>
 		<entering public="1"><c path="String"/></entering>
 		<exiting public="1"><c path="String"/></exiting>
-		<defineTrans public="1" line="36">
+		<changed public="1"><c path="String"/></changed>
+		<defineTrans public="1" line="41">
 			<f a="action:target">
 				<c path="String"/>
 				<c path="String"/>
@@ -3348,7 +3360,7 @@
 	 * Define a transition. 
 	 </haxe_doc>
 		</defineTrans>
-		<removeTrans public="1" line="45">
+		<removeTrans public="1" line="50">
 			<f a="action">
 				<c path="String"/>
 				<e path="Void"/>
@@ -3357,7 +3369,7 @@
 	 * Remove a previously defined transition.
 	 </haxe_doc>
 		</removeTrans>
-		<getTarget public="1" line="53">
+		<getTarget public="1" line="58">
 			<f a="action">
 				<c path="String"/>
 				<c path="String"/>
@@ -3372,8 +3384,9 @@
 	 *  Transition map of actions to target states
 	 </haxe_doc>
 		</transitions>
-		<new public="1" line="25">
-			<f a="name:?entering:?exiting">
+		<new public="1" line="28">
+			<f a="name:?entering:?exiting:?changed">
+				<c path="String"/>
 				<c path="String"/>
 				<c path="String"/>
 				<c path="String"/>
@@ -3517,7 +3530,7 @@
 	 * Creates a [State] instance from its Xml definition.
 	 </haxe_doc>
 		</createState>
-		<isInitial line="96">
+		<isInitial line="97">
 			<f a="stateName">
 				<c path="String"/>
 				<e path="Bool"/>
