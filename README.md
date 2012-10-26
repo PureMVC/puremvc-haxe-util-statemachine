@@ -69,7 +69,7 @@ Production - [Version 1.2](https://github.com/PureMVC/puremvc-haxe-util-statemac
 * An exiting notification is defined only for exiting the OPEN state to illustrate that entering and exiting notifications are optional.
 
 ## License
-* PureMVC Haxe Utility - State Machine (Ported) - Copyright (c) 2009 Zjnue Brzavi 
+* PureMVC Haxe Utility - State Machine (Ported) - Copyright © 2009 Zjnue Brzavi 
 * PureMVC - Copyright © 2006-2012 Futurescale, Inc.
 * All rights reserved.
 
