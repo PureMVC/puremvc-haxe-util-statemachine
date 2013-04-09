@@ -58,6 +58,11 @@ class FSMInjector extends Notifier
 	 */
 	private function getStates() : List<State>
 	{
+		return get_states();
+	}
+	
+	private function get_states() : List<State>
+	{
 		if( stateList == null ) {
 			stateList = new List();
 			for( stateDef in fsm.elementsNamed("state") )
@@ -69,7 +74,11 @@ class FSMInjector extends Notifier
 		return stateList;
 	}
 	
-	public var states( getStates, null ) : List<State>;
+	#if haxe3
+	public var states( get, null ) : List<State>;
+	#else
+	public var states( get_states, null ) : List<State>;
+	#end
 
 	/**
 	 * Creates a [State] instance from its Xml definition.

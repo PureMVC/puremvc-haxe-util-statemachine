@@ -8,6 +8,12 @@ package org.puremvc.haxe.utilities.statemachine;
 import org.puremvc.haxe.interfaces.INotification;
 import org.puremvc.haxe.patterns.mediator.Mediator;
 
+#if haxe3
+import haxe.ds.StringMap;
+#else
+private typedef StringMap<T> = Hash<T>;
+#end
+
 /**
  * A Finite State Machine implementation.
  * 
@@ -41,7 +47,7 @@ class StateMachine extends Mediator
 	public function new()
 	{
 		super( NAME );
-		states = new Hash<State>();
+		states = new StringMap<State>();
 	}
 	
 	override public function onRegister() : Void
@@ -73,14 +79,19 @@ class StateMachine extends Mediator
 	
 	/**
 	 * Transitions to the given state from the current state.
-	 *
-	 * <p>Sends the exiting notification for the current state 
-	 * and the entering notification for the new state.</p>
-	 *
-	 * <p>Both the exiting notification for the current state
-	 * and the entering notification for the next state
-	 * will have a reference to the next state in the note
-	 * body.</p>
+	 * <p>
+	 * Sends the [exiting] notification for the current state 
+	 * followed by the [entering] notification for the new state.
+	 * Once finally transitioned to the new state, the [changed] 
+	 * notification for the new state is sent.</p>
+	 * <p>
+	 * If a data parameter is provided, it is included as the body of all
+	 * three state-specific transition notes.</p>
+	 * <p>
+	 * Finally, when all the state-specific transition notes have been
+	 * sent, a [StateMachine.CHANGED] note is sent, with the
+	 * new [State] object as the [body] and the name of the 
+	 * new state in the [type].</p>
 	 */
 	private function transitionTo( nextState : State, ?data : Dynamic = null ) : Void
 	{
@@ -90,16 +101,16 @@ class StateMachine extends Mediator
 		// Clear the cancel flag
 		canceled = false;
 			
-		// Exit the current State 
+		// Exit the current State
 		if( currentState != null && currentState.exiting != null )
 			sendNotification( currentState.exiting, data, nextState.name );
-			
+		
 		// Check to see whether the exiting guard has been canceled
 		if( canceled ) {
 			canceled = false;
 			return;
 		}
-			
+		
 		// Enter the next State 
 		if( nextState.entering != null ) sendNotification( nextState.entering, data );
 			
@@ -111,7 +122,7 @@ class StateMachine extends Mediator
 		
 		// change the current state only when both guards have been passed
 		currentState = nextState;
-			
+		
 		// Send the notification configured to be sent when this specific state becomes current 
 		if( nextState.changed != null ) sendNotification( currentState.changed, data );
 
@@ -137,24 +148,36 @@ class StateMachine extends Mediator
 	 */
 	override public function handleNotification( note : INotification ) : Void
 	{
-		switch( note.getName() )
+		var name = note.getName();
+		
+		if (name == ACTION)
 		{
-			case ACTION:
-				var action : String = note.getType();
-				var target : String = currentState.getTarget( action );
-				if( states.exists( target ) )
-					transitionTo( states.get( target ), note.getBody() );
-			case CANCEL:
-				canceled = true;
+			var action : String = note.getType();
+			var target : String = currentState.getTarget( action );
+			if( states.exists( target ) )
+				transitionTo( states.get( target ), note.getBody() );
+		}
+		else if (name == CANCEL)
+		{
+			canceled = true;
 		}
 	}
 	
-	public var currentState( getCurrentState, setCurrentState ) : State;
+	#if haxe3
+	public var currentState( get, set ) : State;
+	#else
+	public var currentState( get_currentState, set_currentState ) : State;
+	#end
 	
 	/**
 	 * Get the current state.
 	 */
 	private function getCurrentState() : State
+	{
+		return get_currentState();
+	}
+	
+	private function get_currentState() : State
 	{
 		return viewComponent;
 	}
@@ -164,6 +187,11 @@ class StateMachine extends Mediator
 	 */
 	private function setCurrentState( state : State ) : State
 	{
+		return set_currentState( state );
+	}
+	
+	private function set_currentState( state : State ) : State
+	{
 		viewComponent = state;
 		return state;
 	}
@@ -171,7 +199,7 @@ class StateMachine extends Mediator
 	/**
 	 * Map of States objects by name.
 	 */
-	private var states : Hash<State>;
+	private var states : StringMap<State>;
 	
 	/**
 	 * The initial state of the FSM.
