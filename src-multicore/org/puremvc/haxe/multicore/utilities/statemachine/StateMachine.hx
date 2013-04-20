@@ -8,6 +8,12 @@ package org.puremvc.haxe.multicore.utilities.statemachine;
 import org.puremvc.haxe.multicore.interfaces.INotification;
 import org.puremvc.haxe.multicore.patterns.mediator.Mediator;
 
+#if haxe3
+import haxe.ds.StringMap;
+#else
+private typedef StringMap<T> = Hash<T>;
+#end
+
 /**
  * A Finite State Machine implementation.
  * 
@@ -41,7 +47,7 @@ class StateMachine extends Mediator
 	public function new()
 	{
 		super( NAME );
-		states = new Hash<State>();
+		states = new StringMap<State>();
 	}
 	
 	override public function onRegister() : Void
@@ -142,24 +148,36 @@ class StateMachine extends Mediator
 	 */
 	override public function handleNotification( note : INotification ) : Void
 	{
-		switch( note.getName() )
+		var name = note.getName();
+		
+		if (name == ACTION)
 		{
-			case ACTION:
-				var action : String = note.getType();
-				var target : String = currentState.getTarget( action );
-				if( states.exists( target ) )
-					transitionTo( states.get( target ), note.getBody() );
-			case CANCEL:
-				canceled = true;
+			var action : String = note.getType();
+			var target : String = currentState.getTarget( action );
+			if( states.exists( target ) )
+				transitionTo( states.get( target ), note.getBody() );
+		}
+		else if (name == CANCEL)
+		{
+			canceled = true;
 		}
 	}
 	
-	public var currentState( getCurrentState, setCurrentState ) : State;
+	#if haxe3
+	public var currentState( get, set ) : State;
+	#else
+	public var currentState( get_currentState, set_currentState ) : State;
+	#end
 	
 	/**
 	 * Get the current state.
 	 */
 	private function getCurrentState() : State
+	{
+		return get_currentState();
+	}
+	
+	private function get_currentState() : State
 	{
 		return viewComponent;
 	}
@@ -169,6 +187,11 @@ class StateMachine extends Mediator
 	 */
 	private function setCurrentState( state : State ) : State
 	{
+		return set_currentState( state );
+	}
+	
+	private function set_currentState( state : State ) : State
+	{
 		viewComponent = state;
 		return state;
 	}
@@ -176,7 +199,7 @@ class StateMachine extends Mediator
 	/**
 	 * Map of States objects by name.
 	 */
-	private var states : Hash<State>;
+	private var states : StringMap<State>;
 	
 	/**
 	 * The initial state of the FSM.

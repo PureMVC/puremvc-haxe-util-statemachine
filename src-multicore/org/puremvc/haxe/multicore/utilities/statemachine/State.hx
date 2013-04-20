@@ -5,6 +5,12 @@
  */
 package org.puremvc.haxe.multicore.utilities.statemachine;
 
+#if haxe3
+import haxe.ds.StringMap;
+#else
+private typedef StringMap<T> = Hash<T>;
+#end
+
 /**
  * Defines a State.
  */
@@ -32,7 +38,7 @@ class State
 		if( entering != null ) this.entering = entering;
 		if( exiting != null ) this.exiting = exiting;
 		if( changed != null ) this.changed = changed;
-		transitions = new Hash<String>();
+		transitions = new StringMap<String>();
 	}
 	
 	/** 
@@ -63,6 +69,6 @@ class State
 	/**
 	 *  Transition map of actions to target states
 	 */ 
-	private var transitions : Hash<String>;
+	private var transitions : StringMap<String>;
 	
 }
