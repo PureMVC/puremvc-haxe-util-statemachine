@@ -1,13 +1,15 @@
 PureMVC Haxe Utility - State Machine (Ported)
 --------------------------------------------------------------------------
-Release Date: 1/11/09
+Release Date: 4/20/13
     Platform: Haxe 
      Version: 1 
-    Revision: 1
+    Revision: 3
      Authors: Neil Manuell <neil.manuell@puremvc.org>
             : Cliff Hall <cliff.hall@puremvc.org>
             : Zjnue Brzavi <zjnue.brzavi@puremvc.org>
 --------------------------------------------------------------------------
+1.3 Haxe 3 support added by zjnue
+
 1.2 Added reentrant state capability, 'changed' notification for individual
     states, and a data parameter sent in the body of any StateMachine.ACTION
     notification will be passed out as the body of the 'exiting','entering', 
