@@ -9,7 +9,7 @@ This utility provides a simple yet effective  Finite State Machine implementatio
 * [MultiCore Version](http://darkstar.puremvc.org/content_header.html?url=http://puremvc.org/pages/docs/Haxe/Utility_Haxe_StateMachine/doc-multicore/&desc=PureMVC%20MultiCore%20Docs%20Haxe%20Utility:%20State%20Machine)
 
 ## Status
-Production - [Version 1.2](https://github.com/PureMVC/puremvc-haxe-util-statemachine/blob/master/VERSION)
+Production - [Version 1.3](https://github.com/PureMVC/puremvc-haxe-util-statemachine/blob/master/VERSION)
 
 ## Demos Using This Utility
 * [Stopwatch](https://github.com/PureMVC/puremvc-haxe-demo-xinf-stopwatch/wiki)
